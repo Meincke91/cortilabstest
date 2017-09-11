@@ -1,0 +1,59 @@
+@font-face {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Avenir'), url('AvenirLTStd-Roman.otf') format('truetype');
+}
+
+/* GENERAL */
+
+.box-shadowed{
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+body{
+	background: #f3f3f3;
+	font-family: 'Avenir';
+}
+
+/* HEADER */
+.header{
+	height:60px;
+	background-color: #ffffff;
+	width: 95%;
+	float:none;
+	margin:auto;
+	margin-top:30px;
+	border-radius: 3px;
+}
+
+.header-element{
+	text-align: center;
+}
+
+.header-logo{
+	float:left;
+	width:20%;
+	margin-left:40%;
+	margin-top:10%;
+}
+
+.header-element-value{
+	font-size: 1.0em;
+	margin-top: 10px;
+}
+.header-element-label{
+	font-size: 0.7em;
+	color:#7c7c7c;
+	margin-top:5px;
+}
+/* CONTENT */
+
+.content{
+	background-color: #ffffff;
+	width: 95%;
+	float:none;
+	margin:auto;
+	margin-top:30px;
+	border-radius: 3px;
+}
