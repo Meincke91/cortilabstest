@@ -1,22 +1,54 @@
 <template>
   <div class="home">
-      <my-header></my-header>
-      <my-graph-container></my-graph-container>
-      <my-data-fetcher></my-data-fetcher>
+      <my-header :calls="this.calls" :device="this.device"></my-header>
+      <my-graph-container :calls="this.calls"></my-graph-container>
   </div>
 </template>
 
 <script>
 import MyHeader from '@/components/MyHeader'
 import MyGraphContainer from '@/components/MyGraphContainer'
-import MyDataFetcher from '@/components/MyDataFetcher'
+import axios from 'axios'
 
 export default {
   name: 'home',
   components: {
     MyHeader,
-    MyGraphContainer,
-    MyDataFetcher
+    MyGraphContainer
+  },
+  data () {
+    return {
+      device: [{ 'deviceId': 0, 'createdAt': 0 }],
+      calls: [{ 'ca': 0, 'createdAt': 0, 'predictionTime': 0 }]
+    }
+  },
+  methods: {
+    fetchData: function () {
+      axios.get(`http://127.0.0.1:3000/calls`, { params: {deviceId: 1} })
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.calls = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+
+      axios.get(`http://127.0.0.1:3000/device`, { params: {deviceId: 1} })
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.device = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
+  },
+  mounted: function () {
+    this.fetchData()
+
+    setInterval(function () {
+      this.fetchData()
+    }.bind(this), 10000)
   }
 }
 </script>
