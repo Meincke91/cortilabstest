@@ -1,14 +1,14 @@
 <template>
   <div class="col-md-2 header-element">
-    <div class="row header-element-value">1</div>
-    <div class="row header-element-label">Device Deployed</div>
+    <div class="row header-element-value">{{ myvalue }}</div>
+    <div class="row header-element-label">{{ mylabel }}</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'header-element',
-  props: ['element-value', 'element-label']
+  props: ['myvalue', 'mylabel']
 }
 </script>
 

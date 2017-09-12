@@ -1,11 +1,11 @@
 <template>
-		<div class=" my-headerrow header_container box-shadowed">
+		<div class="my-header row header_container box-shadowed">
 			<logo-element></logo-element>
-			<header-element element-value="1" element-label="Device Deployed"></header-element>
-      <header-element element-value="73" element-label="Days since start"></header-element>
-      <header-element element-value="2218" element-label="Calls since start"></header-element>
-      <header-element element-value="141" element-label="CA calls detected since start"></header-element>
-      <header-element element-value="84 sec" element-label="Avg. time to detection"></header-element>
+			<header-element myvalue="1" mylabel="Device Deployed"></header-element>
+      <header-element myvalue="73" mylabel="Days since start"></header-element>
+      <header-element myvalue="2218" mylabel="Calls since start"></header-element>
+      <header-element myvalue="141" mylabel="CA calls detected since start"></header-element>
+      <header-element myvalue="84 sec" mylabel="Avg. time to detection"></header-element>
 		</div>	
 </template>
 
