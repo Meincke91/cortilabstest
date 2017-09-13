@@ -1,7 +1,7 @@
 {
-  "name": "vueapp01",
+  "name": "cortilabs-frontend",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A Vue.js project created for the student job application challenge from CortiLabs",
   "author": "Martin Meincke <meincke91@hotmail.com>",
   "private": true,
   "scripts": {

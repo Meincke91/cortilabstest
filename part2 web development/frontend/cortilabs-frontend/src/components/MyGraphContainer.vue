@@ -20,9 +20,14 @@
       }
     },
     methods: {
+      /**
+      * transform call objects to labels and values, and create datacollection for the chart
+      * @param {Array} calls
+      * @return {Object} datacollection
+      **/
       fillData (calls) {
         var caCalls = this.getCaCalls(calls)
-        var caCallsPerDay = this.getCaCallsPerDay(this.getDayValues(caCalls))
+        var caCallsPerDay = this.getCaCallsPerDay(this.getCreatedAtAsArray(caCalls))
         var dateStrings = this.unixTimeToDate(caCallsPerDay[0])
         var datacollection = {
           labels: dateStrings,
@@ -39,25 +44,40 @@
         }
         return datacollection
       },
-      getDayValues (calls) {
-        var days = []
+      /**
+      * get creation time of calls as array
+      * @param {Array} calls
+      * @return {Array} createdAt
+      **/
+      getCreatedAtAsArray (calls) {
+        var createdAt = []
 
         for (var i = 0; i < calls.length; i++) {
           if (calls[i].ca === 1) {
             var predictionTimeInUnix = calls[i].createdAt
-            days.push(predictionTimeInUnix)
+            createdAt.push(predictionTimeInUnix)
           }
         }
-        return days
+        return createdAt
       },
-      unixTimeToDate (days) {
+      /**
+      * Convert array of unixtimestamps to String of format 'YYYY-MM-DD'
+      * @param {Array} unixtimestamps
+      * @return {Array} dateStrings
+      **/
+      unixTimeToDate (unixTimestamps) {
         var dateStrings = []
 
-        for (var i = 0; i < days.length; i++) {
-          dateStrings.push(moment(days[i], 'X').format('YYYY-MM-DD'))
+        for (var i = 0; i < unixTimestamps.length; i++) {
+          dateStrings.push(moment(unixTimestamps[i], 'X').format('YYYY-MM-DD'))
         }
         return dateStrings
       },
+      /**
+      * Filter ca calls from calls
+      * @param {Array} calls
+      * @return {Array} caCalls
+      **/
       getCaCalls (calls) {
         var caCalls = []
         for (var i = 0; i < calls.length; i++) {
@@ -67,11 +87,16 @@
         }
         return caCalls
       },
-      getCaCallsPerDay (caCalls) {
+      /**
+      * group calls by day
+      * @param {Array} calls
+      * @return {Array} array of labels and values
+      **/
+      getCaCallsPerDay (calls) {
         var a = []
         var b = []
         var prev
-        var unixFloorDays = this.floorUnixToDays(caCalls)
+        var unixFloorDays = this.floorUnixToDays(calls)
         unixFloorDays.sort()
         for (var i = 0; i < unixFloorDays.length; i++) {
           if (unixFloorDays[i] !== prev) {
@@ -84,11 +109,15 @@
         }
         return [a, b]
       },
-      floorUnixToDays (unixTimes) {
+      /**
+      * round down the unix time to nearest day
+      * @param {Array} unixTimestamps
+      **/
+      floorUnixToDays (unixTimestamps) {
         var floorUnix = []
 
-        for (var i = 0; i < unixTimes.length; i++) {
-          floorUnix.push(parseInt(moment(unixTimes[i], 'X').startOf('day').format('X')))
+        for (var i = 0; i < unixTimestamps.length; i++) {
+          floorUnix.push(parseInt(moment(unixTimestamps[i], 'X').startOf('day').format('X')))
         }
         return floorUnix
       }

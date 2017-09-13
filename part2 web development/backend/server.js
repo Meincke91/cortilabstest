@@ -6,16 +6,6 @@ const cors = require('cors')
 
 const hostname = '127.0.0.1';
 const port = 3000;
-/*
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});*/
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -23,14 +13,6 @@ var con = mysql.createConnection({
   password: "admin",
   database: "cortilabs"
 });
-/*
-con.connect(function(err) {
-  if (err) throw err;
-  con.query("SELECT * FROM prediction", function (err, result, fields) {
-    if (err) throw err;
-    console.log(JSON.stringify(result));
-  });
-});*/
 
 var app = Express();
 var router = Express.Router();
@@ -41,13 +23,6 @@ app.disable('etag');
 app.use(cors())
 
 app.use('/', router);
-
-
-router.get('/', function(req, res) {
-	console.log('ikke secured');
-	res.end('Hello World\n');
-	res.sendStatus(200);
-});
 
 router.get('/device', function(req, res) {
   deviceId = req.query.deviceId
@@ -94,21 +69,10 @@ router.get('/calls', function(req, res) {
   });
 });
 
-router.get('/test', function(req, res) {
-	res.statusCode = 200;
-	res.setHeader('Content-Type', 'application/json');
-	getAllPredictions(function(err,data){
-        if (err) {
-            // error handling code goes here
-            console.log("ERROR : ",err);            
-        } else {            
-            // code to execute on data retrieval
-            res.end(JSON.stringify(data)); 
-        }    
 
-	});
-});
-
+/**
+* Database call functions
+**/
 function getDeviceFromId(id, callback)
 { 
   con.connect(function(err) {
@@ -163,6 +127,10 @@ function getAllPredictions(callback)
 	    });
 	});
 }
+
+/**
+* start the application
+**/
 
 app.listen(port, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

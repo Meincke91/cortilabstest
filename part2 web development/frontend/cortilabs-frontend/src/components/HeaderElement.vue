@@ -12,20 +12,21 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .header-element{
+    height:50px;
     text-align: center;
   }
 
   .header-element-value{
     font-size: 1.0em;
-    margin-top: 10px;
+    padding-top: 5px;
     font-weight: 500;
   }
   .header-element-label{
-    font-size: 0.7em;
+    font-size: 0.71em;
     color:#7c7c7c;
-    margin-top:5px;
+    padding-top:5px;
+    font-weight: 500;
   }
 </style>

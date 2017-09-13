@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home col-md-12">
       <my-header :calls="this.calls" :device="this.device"></my-header>
       <my-graph-container :calls="this.calls"></my-graph-container>
   </div>
@@ -22,8 +22,20 @@ export default {
       calls: [{ 'ca': 0, 'createdAt': 0, 'predictionTime': 0 }]
     }
   },
+  mounted: function () {
+    this.fetchData()
+
+    // fetch new data every 10 seconds
+    setInterval(function () {
+      this.fetchData()
+    }.bind(this), 10000)
+  },
   methods: {
+    /**
+    * fetch the data as JSON
+    **/
     fetchData: function () {
+      // get all calls for a device with id 1
       axios.get(`http://127.0.0.1:3000/calls`, { params: {deviceId: 1} })
       .then(response => {
         // JSON responses are automatically parsed.
@@ -33,6 +45,7 @@ export default {
         this.errors.push(e)
       })
 
+      // get the information of the device with id 1
       axios.get(`http://127.0.0.1:3000/device`, { params: {deviceId: 1} })
       .then(response => {
         // JSON responses are automatically parsed.
@@ -42,19 +55,15 @@ export default {
         this.errors.push(e)
       })
     }
-  },
-  mounted: function () {
-    this.fetchData()
-
-    setInterval(function () {
-      this.fetchData()
-    }.bind(this), 10000)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.home {
+  padding:0;
+}
 h1, h2 {
   font-weight: normal;
 }

@@ -1,7 +1,7 @@
 <script>
-      import {Bar, mixins} from 'vue-chartjs' // We specify what type of chart we want from vue-chartjs and the mixins module
+      import {Bar, mixins} from 'vue-chartjs'
       const { reactiveProp } = mixins
-      export default Bar.extend({ // We are extending the base chart class as mentioned above
+      export default Bar.extend({ // Extending the base chart class
         mixins: [reactiveProp],
         data () {
           return {

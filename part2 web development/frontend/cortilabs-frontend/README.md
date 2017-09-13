@@ -1,4 +1,4 @@
-# vueapp01
+# cortilabs-frontend
 
 > A Vue.js project
 
