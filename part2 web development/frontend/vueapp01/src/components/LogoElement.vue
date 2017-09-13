@@ -14,8 +14,8 @@ export default {
 <style scoped>
   .header-logo{
     float:left;
-    width:20%;
+    width:15%;
     margin-left:40%;
-    margin-top:10%;
+    margin-top:9%;
   }
 </style>

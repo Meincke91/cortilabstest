@@ -21,6 +21,7 @@ export default {
   .header-element-value{
     font-size: 1.0em;
     margin-top: 10px;
+    font-weight: 500;
   }
   .header-element-label{
     font-size: 0.7em;

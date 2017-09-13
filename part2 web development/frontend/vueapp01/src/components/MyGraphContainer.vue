@@ -1,6 +1,6 @@
 <template>
   <div class="my-graph-container box-shadowed">
-    <my-bar-chart :height="600" :chart-data="datacollection"></my-bar-chart>
+    <my-bar-chart :height="600" :chart-data="fillData(calls)"></my-bar-chart>
   </div>
 </template>
 
@@ -19,20 +19,13 @@
         datacollection: null
       }
     },
-    created () {
-      this.fillData()
-
-      setInterval(function () {
-        this.fillData()
-      }.bind(this), 10000)
-    },
     methods: {
-      fillData () {
-        this.caCalls = this.getCaCalls(this.calls)
-        this.caCallsPerDay = this.getCaCallsPerDay(this.getDayValues(this.caCalls))
-        this.dateStrings = this.unixTimeToDate(this.caCallsPerDay[0])
-        this.datacollection = {
-          labels: this.dateStrings,
+      fillData (calls) {
+        var caCalls = this.getCaCalls(calls)
+        var caCallsPerDay = this.getCaCallsPerDay(this.getDayValues(caCalls))
+        var dateStrings = this.unixTimeToDate(caCallsPerDay[0])
+        var datacollection = {
+          labels: dateStrings,
           datasets: [
             {
               label: 'Detected Cardiac Arrest Calls',
@@ -40,10 +33,11 @@
               pointBackgroundColor: 'white',
               borderWidth: 1,
               pointBorderColor: '#234175',
-              data: this.caCallsPerDay[1]
+              data: caCallsPerDay[1]
             }
           ]
         }
+        return datacollection
       },
       getDayValues (calls) {
         var days = []
@@ -77,19 +71,26 @@
         var a = []
         var b = []
         var prev
-
-        caCalls.sort()
-        for (var i = 0; i < caCalls.length; i++) {
-          if (caCalls[i] !== prev) {
-            a.push(caCalls[i])
+        var unixFloorDays = this.floorUnixToDays(caCalls)
+        unixFloorDays.sort()
+        for (var i = 0; i < unixFloorDays.length; i++) {
+          if (unixFloorDays[i] !== prev) {
+            a.push(unixFloorDays[i])
             b.push(1)
           } else {
             b[b.length - 1]++
           }
-          prev = caCalls[i]
+          prev = unixFloorDays[i]
         }
-
         return [a, b]
+      },
+      floorUnixToDays (unixTimes) {
+        var floorUnix = []
+
+        for (var i = 0; i < unixTimes.length; i++) {
+          floorUnix.push(parseInt(moment(unixTimes[i], 'X').startOf('day').format('X')))
+        }
+        return floorUnix
       }
     }
   }
